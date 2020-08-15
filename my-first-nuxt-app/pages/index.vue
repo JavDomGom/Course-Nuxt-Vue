@@ -1,6 +1,6 @@
 <template>
   <div class="container">
-    <button @click="$router.push('/products')">Load product</button>
+    <a href="/users">Users</a>
   </div>
 </template>
 
