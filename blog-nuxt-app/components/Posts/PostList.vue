@@ -1,23 +1,13 @@
 <template>
   <section class="post-list">
     <PostPreview
-      id="1"
+      v-for="post in posts"
+      :key="post.id"
+      :id="post.id"
       :is-admin="isAdmin"
-      thumbnail="https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcRbRgucQ5ANNoAXfK8VZgiNb46V9C0D8xL-UA&usqp=CAU"
-      title="Hello there!"
-      previewText="This is my first post!"
-    />
-    <PostPreview
-      id="2"
-      thumbnail="https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcRbRgucQ5ANNoAXfK8VZgiNb46V9C0D8xL-UA&usqp=CAU"
-      title="Hello there - the second time!"
-      previewText="This is my second post!"
-    />
-    <PostPreview
-      id="3"
-      thumbnail="https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcRbRgucQ5ANNoAXfK8VZgiNb46V9C0D8xL-UA&usqp=CAU"
-      title="Hi!"
-      previewText="This is my third post!"
+      :thumbnail="post.thumbnail"
+      :title="post.title"
+      :previewText="post.previewText"
     />
   </section>
 </template>
@@ -30,8 +20,14 @@ export default {
     PostPreview,
   },
   props: {
-    isAdmin: Boolean,
-    default: false,
+    isAdmin: {
+      type: Boolean,
+      default: false,
+    },
+    posts: {
+      type: Array,
+      required: true,
+    },
   },
 };
 </script>
