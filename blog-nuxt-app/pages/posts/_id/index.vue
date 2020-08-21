@@ -3,7 +3,9 @@
     <section class="post">
       <h1 class="post-title">{{ loadedPost.title }}</h1>
       <div class="post-details">
-        <div class="post-detail">Last updated on {{ loadedPost.updatedDate }}</div>
+        <div class="post-detail">
+          Last updated on {{ loadedPost.updatedDate }}
+        </div>
         <div class="post-detail">Written by {{ loadedPost.author }}</div>
       </div>
       <p class="post-content">{{ loadedPost.content }}</p>
@@ -11,33 +13,30 @@
     <section class="post-feedback">
       <p>
         Let me know what you think about the post, send a mail to
-        <a
-          href="mailto:feedback@mail.com"
-        >mailto:feedback@mail.com</a>.
+        <a href="mailto:feedback@mail.com">mailto:feedback@mail.com</a>.
       </p>
     </section>
   </div>
 </template>
 
 <script>
+import axios from "axios";
+
 export default {
   asyncData(context, callback) {
-    setTimeout(() => {
-      callback(null, {
-        loadedPost: {
-          id: "1",
-          title: "First Post (ID: " + context.route.params.id + ")",
-          previewText: "This is our first post!",
-          author: "Javier",
-          updatedDate: new Date(),
-          content:
-            "Some dummy text which is definitely not the preview text though!",
-          thumbnail:
-            "https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcRbRgucQ5ANNoAXfK8VZgiNb46V9C0D8xL-UA&usqp=CAU",
-        },
-      });
-    }, 1000);
-  },
+    return axios
+      .get(
+        "https://nuxt-blog-624b9.firebaseio.com/posts/" +
+          context.params.id +
+          ".json"
+      )
+      .then(res => {
+        return {
+          loadedPost: res.data
+        };
+      })
+      .catch(e => context.error(e));
+  }
 };
 </script>
 
